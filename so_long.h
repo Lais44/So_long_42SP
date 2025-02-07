@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:44:43 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/05 17:46:18 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:36:31 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>
-# include "libft.h"
+# include "library/libft/libft.h"
 
 # define TILE_SIZE 64
 # define WINDOW_WIDTH 600
@@ -45,6 +45,8 @@ typedef struct s_game
 	void		*player;
 	void		*ground;
 	void		*collect;
+	int			player_x;
+	int			player_y;
 }t_game;
 
 typedef struct s_map
@@ -58,11 +60,18 @@ typedef struct s_map
 }t_map;
 
 char	**copy_the_original_map(char **original_map, int height);
-int		main(void);
 int		validate_extension(const char *filename);
-void	start_game(const char *path_map_file);
+void	start_game(const char *path_map_file, t_game *game);
 void	init_game(t_game *game);
 char	**copy_the_original_map(char **original_map, int height);
 void	flood_fill(char **map, int x, int y);
 void	free_map_copy(char **grid, int height);
+int		map_dimensions(t_map *map);
+int		find_player_x(char **map);
+int		find_player_y(char **map);
+void	loading_textures(t_game *game);
+int		render_map(t_game *game);
+void	render_tile(t_game *game, char tile, int x, int y);
+int		main(int argc, char **argv);
+
 #endif

@@ -6,7 +6,7 @@
 #    By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/15 11:49:22 by lleal-go          #+#    #+#              #
-#    Updated: 2025/01/24 15:19:38 by lleal-go         ###   ########.fr        #
+#    Updated: 2025/02/07 16:45:57 by lleal-go         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,20 @@ SRC_DIR = .
 INC_DIR = .
 
 #List of files
-SRC = $(SRC_DIR)/src/open_window.c \
+SRC = $(SRC_DIR)/src/flood_free.c \
 	$(SRC_DIR)/src/read.c \
 	$(SRC_DIR)/src/validate.c \
-	$(SRC_DIR)/src/main.c
+	$(SRC_DIR)/src/so_long.c \
+	$(SRC_DIR)/src/render.c \
+	$(SRC_DIR)/src/positions.c \
+	$(SRC_DIR)/src/movements.c \
+	$(SRC_DIR)/src/loading_textures.c \
+	$(SRC_DIR)/src/exit.c \
+	$(SRC_DIR)/src/dimensions_map.c
 	
 #objects
 
-OBJ = $(SRC:$(SRC_DIR)/%.c=%.o)
+OBJ = $(SRC:$(SRC_DIR)/%.c=$(SRC_DIR)/%.o)
 
 #Compilators and flags
 CC = cc
@@ -46,7 +52,7 @@ $(NAME): $(OBJ)
 	@$(MAKE) -C $(LIBFT_DIR)
 	$(CC) $(CFLAGS) -I $(INC_DIR) -I $(MLX_DIR) -I $(LIBFT_DIR) -o $(NAME) $(OBJ) $(LDFLAGS) $(LIBFT)
 
-%.o : %.c
+%.o : $(CFLAGS)/%.c
 	$(CC) $(CFLAGS) -I $(INC_DIR) -I $(MLX_DIR) -I $(LIBFT_DIR) -c $< -o $@
 #Compile Libft
 #$(LIBFT):

@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 17:15:18 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/05 18:59:31 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/07 14:05:14 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,25 @@ void	loading_textures(t_game *game)
 		write(2, "Error\nFailed to load textures\n", 31);
 		exit(1);
 	}
+}
+
+void	render_tile(t_game *game, char tile, int x, int y)
+{
+	if (tile == '1')
+		mlx_put_image_to_window(game->mlx, game->wall,
+			x * TILE_SIZE, y * TILE_SIZE);
+	else if (tile == '0')
+		mlx_put_image_to_window(game->mlx, game->ground,
+			x * TILE_SIZE, y * TILE_SIZE);
+	else if (tile == 'P')
+		mlx_put_image_to_window(game->mlx, game->player,
+			x * TILE_SIZE, y * TILE_SIZE);
+	else if (tile == 'C')
+		mlx_put_image_to_window(game->mlx, game->collect,
+			x * TILE_SIZE, y * TILE_SIZE);
+	else if (tile == 'E')
+		mlx_put_image_to_window(game->mlx, game->portal,
+			x * TILE_SIZE, y * TILE_SIZE);
 }
 
 void	init_images(t_game *game)

@@ -1,38 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read.c                                             :+:      :+:    :+:   */
+/*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/20 18:29:21 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/07 13:54:43 by lleal-go         ###   ########.fr       */
+/*   Created: 2025/02/07 15:55:40 by lleal-go          #+#    #+#             */
+/*   Updated: 2025/02/07 17:04:49 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-char	read_maps(const char *map_type)
+int	render_map(t_game *game)
 {
-	int		fd;
-	char	*line;
-	int		i;
-	char	**map;
+	int	y;
+	int	x;
 
-	i = 0;
-	fd = open(map_type, O_RDONLY, 0777);
-	if (fd < 0)
-		ft_putstr_fd("ERROR: CONNOT OPEN THE MAP TYPE\n", 2);
-	map = malloc(sizeof(char *) * 1024);
-	ft_putstr_fd("ERROR: FAILED ON MEMORY", 2);
-	line = get_next_line(fd);
-	if (line)
+	y = 0;
+	x = 0;
+	while (game->map[y])
 	{
-		map[i] = line;
-		i++;
-		line = get_next_line(fd);
+		while (game->map[y][x])
+		{
+			render_tile(game, game->map[y][x], x, y);
+			x++;
+		}
+		y++;
 	}
-	map[i] = NULL;
-	close(fd);
-	return (fd);
+	mlx_do_sync(game->mlx);
+	return (0);
 }

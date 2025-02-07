@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 18:30:29 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/07 13:31:54 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:39:45 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,51 +21,29 @@ int	main(int argc, char **argv)
 		return (1);
 	if (argc != 2)
 	{
-		write(2, "Error: Usage: ./so_long <map.ber>\n", 33);
+		ft_putstr_fd("Error: Usage: ./so_long <map.ber>\n", 2);
 		free(game);
 		return (1);
 	}
-
-/*int	main(void)
-{
-	void	*mlx_ptr;
-	void	*win_ptr;
-
-	mlx_ptr = mlx_init();
-	if (mlx_ptr == NULL)
-		return (1);
-	win_ptr = mlx_new_window(mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, "window");
-	if (win_ptr == NULL)
-	{
-		free(win_ptr);
-		return (1);
-	}
-	while (1)
-	{
-		mlx_destroy_window(mlx_ptr, win_ptr);
-		mlx_destroy_display(mlx_ptr);
-		free(mlx_ptr);
-	}
-	return (0);
-}
-*/
-
-int	validate_extension(const char *name)
-{
-	size_t	len;
-
-	len = ft_strlen(name);
-	if (len < 4)
-		return (0);
-	return (!ft_strncmp(name + len - 4, ".ber", 4));
+	start_game(argv[1], game);
+	mlx_key_hook(game->mlx, &game);
+	mlx_loop(game->mlx);
 }
 
-void	start_game(const char *path_map_file)
+void	start_game(const char *path_map_file, t_game *game)
 {
-	t_map	*map;
-	t_game	game;
+	int		map_width_height;
+	t_map	map_info;
 
-	init_game(&game);
+	game->mlx = mlx_init();
+	if (!game->mlx)
+	{
+		ft_putstr_fd ("ERROR: FEILED TO INICIALIZE MLX\n", 32);
+		exit(1);
+	}
+	map_info.grid = game->map;
+	map_width_height = map_dimensions(game->map);
+	loading_textures(game);
 }
 
 void	init_game(t_game *game)
