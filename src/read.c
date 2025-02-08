@@ -6,13 +6,13 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 18:29:21 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/07 13:54:43 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/08 20:30:33 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-char	read_maps(const char *map_type)
+char	**read_maps(const char *map_type)
 {
 	int		fd;
 	char	*line;
@@ -24,9 +24,10 @@ char	read_maps(const char *map_type)
 	if (fd < 0)
 		ft_putstr_fd("ERROR: CONNOT OPEN THE MAP TYPE\n", 2);
 	map = malloc(sizeof(char *) * 1024);
-	ft_putstr_fd("ERROR: FAILED ON MEMORY", 2);
+	if (!map)
+		ft_putstr_fd("ERROR: FAILED ON MEMORY", 2);
 	line = get_next_line(fd);
-	if (line)
+	while (line)
 	{
 		map[i] = line;
 		i++;
@@ -34,5 +35,5 @@ char	read_maps(const char *map_type)
 	}
 	map[i] = NULL;
 	close(fd);
-	return (fd);
+	return (map);
 }

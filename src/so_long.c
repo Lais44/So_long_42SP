@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 18:30:29 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/07 17:39:45 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/08 20:25:52 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,17 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	start_game(argv[1], game);
-	mlx_key_hook(game->mlx, &game);
+	init_images(game);
+	mlx_hook(game->win, 2, 1L << 0, handle_key, game);
 	mlx_loop(game->mlx);
+	exit_game(game);
+	return (0);
 }
 
-void	start_game(const char *path_map_file, t_game *game)
+void	start_game(char *path_map_file, t_game *game)
 {
 	int		map_width_height;
-	t_map	map_info;
+	t_map	*map;
 
 	game->mlx = mlx_init();
 	if (!game->mlx)
@@ -41,8 +44,16 @@ void	start_game(const char *path_map_file, t_game *game)
 		ft_putstr_fd ("ERROR: FEILED TO INICIALIZE MLX\n", 32);
 		exit(1);
 	}
-	map_info.grid = game->map;
-	map_width_height = map_dimensions(game->map);
+	map = ft_calloc(1, sizeof(t_map));
+	if (!map)
+		return (ft_putstr_fd("[ERROR]Failed to allocate memory for map.\n", 2));
+	map->grid = read_maps(path_map_file);
+	if (!(map->grid))
+		return (free(map), ft_putstr_fd("[ERR0R]map not load!\n", 2));
+	map_width_height = get_map_dimensions(map, map->grid);
+	render_map(game);
+	game->player_x = find_player_x(game->map);
+	game->player_y = find_player_y(game->map);
 	loading_textures(game);
 }
 

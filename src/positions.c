@@ -6,30 +6,22 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:08:03 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/07 14:08:49 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/08 20:23:09 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-int	get_map_width(char **map_data)
+int	get_map_dimensions(t_map *map, char **map_data)
 {
-	char	**map;
-
-	map = map_data;
-	if (!map[0])
-		return (0);
-	return (ft_strlen(map[0]) - 1);
-}
-
-int	get_map_height(char **map)
-{
-	int	height;
-
-	height = 0;
-	while (map[height])
-	height++;
-	return (height);
+	if (!map || !map_data)
+		return (-1);
+	map->width = 0;
+	map->height = 0;
+	map->width = ft_strlen(map_data[0]);
+	while (map_data[map->height])
+		map->height++;
+	return (0);
 }
 
 int	find_player_x(char **map)
@@ -38,9 +30,9 @@ int	find_player_x(char **map)
 	int	x;
 
 	y = 0;
+	x = 0;
 	while (map[y])
 	{
-		x = 0;
 		while (map[y][x])
 		{
 			if (map[y][x] == 'P')

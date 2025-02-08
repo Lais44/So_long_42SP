@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:44:43 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/07 17:36:31 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/08 20:34:39 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_game
 	char		*imgs[5];
 	char		**map;
 	void		*wall;
+	void		*win;
 	void		*portal;
 	void		*player;
 	void		*ground;
@@ -59,9 +60,16 @@ typedef struct s_map
 	int		player_y;
 }t_map;
 
+// Macros para códigos de tecla
+# define KEY_ESC 65307   // Código para a tecla ESC
+# define KEY_W   119     // Código para a tecla W
+# define KEY_A   97      // Código para a tecla A
+# define KEY_S   115     // Código para a tecla S
+# define KEY_D   100     // Código para a tecla D
+
 char	**copy_the_original_map(char **original_map, int height);
 int		validate_extension(const char *filename);
-void	start_game(const char *path_map_file, t_game *game);
+void	start_game(char *path_map_file, t_game *game);
 void	init_game(t_game *game);
 char	**copy_the_original_map(char **original_map, int height);
 void	flood_fill(char **map, int x, int y);
@@ -73,5 +81,10 @@ void	loading_textures(t_game *game);
 int		render_map(t_game *game);
 void	render_tile(t_game *game, char tile, int x, int y);
 int		main(int argc, char **argv);
+void	init_images(t_game *game);
+int		get_map_dimensions(t_map *map, char **map_data);
+int		handle_key(int key, void *param);
+void	exit_game(t_game *game);
+char	**read_maps(const char *map_type);
 
 #endif
