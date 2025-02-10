@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 17:15:18 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/07 14:05:14 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/09 21:58:02 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,19 @@ void	loading_textures(t_game *game)
 void	render_tile(t_game *game, char tile, int x, int y)
 {
 	if (tile == '1')
-		mlx_put_image_to_window(game->mlx, game->wall,
+		mlx_put_image_to_window(game->mlx, game->win, game->wall,
 			x * TILE_SIZE, y * TILE_SIZE);
 	else if (tile == '0')
-		mlx_put_image_to_window(game->mlx, game->ground,
+		mlx_put_image_to_window(game->mlx, game->win, game->ground,
 			x * TILE_SIZE, y * TILE_SIZE);
 	else if (tile == 'P')
-		mlx_put_image_to_window(game->mlx, game->player,
+		mlx_put_image_to_window(game->mlx, game->win, game->player,
 			x * TILE_SIZE, y * TILE_SIZE);
 	else if (tile == 'C')
-		mlx_put_image_to_window(game->mlx, game->collect,
+		mlx_put_image_to_window(game->mlx, game->win, game->collect,
 			x * TILE_SIZE, y * TILE_SIZE);
 	else if (tile == 'E')
-		mlx_put_image_to_window(game->mlx, game->portal,
+		mlx_put_image_to_window(game->mlx, game->win, game->portal,
 			x * TILE_SIZE, y * TILE_SIZE);
 }
 
@@ -77,4 +77,12 @@ void	load_image(t_game *game, void **img, char *path)
 		write(2, "\n", 1);
 		exit(1);
 	}
+}
+
+void	init_components(t_map *map, int *p, int *e, int *y)
+{
+	*p = 0;
+	*e = 0;
+	*y = -1;
+	map->collectible_count = 0;
 }

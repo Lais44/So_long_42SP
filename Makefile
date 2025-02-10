@@ -6,7 +6,7 @@
 #    By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/15 11:49:22 by lleal-go          #+#    #+#              #
-#    Updated: 2025/02/07 16:45:57 by lleal-go         ###   ########.fr        #
+#    Updated: 2025/02/09 20:39:52 by lleal-go         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,7 @@ SRC = $(SRC_DIR)/src/flood_free.c \
 	$(SRC_DIR)/src/positions.c \
 	$(SRC_DIR)/src/movements.c \
 	$(SRC_DIR)/src/loading_textures.c \
-	$(SRC_DIR)/src/exit.c \
-	$(SRC_DIR)/src/dimensions_map.c
+	$(SRC_DIR)/src/exit.c 
 	
 #objects
 

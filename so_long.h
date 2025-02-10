@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:44:43 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/08 20:34:39 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/09 23:19:15 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,11 @@ typedef struct s_game
 
 typedef struct s_map
 {
+	char	**map;
 	char	**grid;
 	int		height;
 	int		width;
-	int		collectable_count;
+	int		collectible_count;
 	int		player_x;
 	int		player_y;
 }t_map;
@@ -74,7 +75,6 @@ void	init_game(t_game *game);
 char	**copy_the_original_map(char **original_map, int height);
 void	flood_fill(char **map, int x, int y);
 void	free_map_copy(char **grid, int height);
-int		map_dimensions(t_map *map);
 int		find_player_x(char **map);
 int		find_player_y(char **map);
 void	loading_textures(t_game *game);
@@ -86,5 +86,9 @@ int		get_map_dimensions(t_map *map, char **map_data);
 int		handle_key(int key, void *param);
 void	exit_game(t_game *game);
 char	**read_maps(const char *map_type);
+void	load_image(t_game *game, void **img, char *path);
+int		validate_map(t_map *map);
+void	init_components(t_map *map, int *p, int *e, int *y);
+int		count_chars(char **map, char c);
 
 #endif

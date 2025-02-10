@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   copy_flood_free.c                                  :+:      :+:    :+:   */
+/*   flood_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 17:02:09 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/07 16:02:15 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/09 23:30:18 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,33 @@ void	flood_fill(char **map, int x, int y)
 	flood_fill (map, x - 1, y);
 	flood_fill (map, x, y + 1);
 	flood_fill (map, x, y - 1);
+}
+
+char	**copy_the_original_map(char **original_map, int height)
+{
+	char	**copy_map;
+	int		i;
+
+	i = 0;
+	copy_map = malloc(sizeof(char *) * (height + 1));
+	if (!copy_map)
+		return (ft_putstr_fd("[ERR0R]FAILED TO ALLOCATE \
+			MEMORY(COPY)\n", 2), NULL);
+	while (i < height)
+	{
+		copy_map[i] = ft_strdup(original_map[i]);
+		if (!copy_map[i])
+		{
+			while (i > 0)
+				free(copy_map[--i]);
+			free(copy_map);
+			return (ft_putstr_fd("[ERR0R]FAILED TO COPY \
+			ORIGINAL MAP\n", 2), NULL);
+		}
+		i++;
+	}
+	copy_map[i] = NULL;
+	return (copy_map);
 }
 
 void	free_map_copy(char **grid, int height)

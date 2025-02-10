@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 18:28:49 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/07 17:09:06 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/09 23:30:38 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,12 @@
 
 static int	check_rectangular_map(t_map *map)
 {
-	int		i;
-	int		len;
+	int	i;
 
-	i = 0;
+	i = 1;
 	while (i < map->height)
 	{
-		len = ft_strlen(map->grid[i]);
-		if (len != map->width)
+		if ((int)ft_strlen(map->grid[i]) != map->width)
 			return (0);
 		i++;
 	}
@@ -33,42 +31,48 @@ static int	wall_check(t_map *map)
 	int	i;
 
 	i = 0;
-	while (i < map->height)
+	while (i < map->width)
 	{
-		if (map->grid[0][i] != '1')
+		if (map->grid[0][i] != '1' || map->grid[map->height - 1][i] != '1')
 			return (0);
 		i++;
 	}
 	i = 0;
-	while (i < map->width)
+	while (i < map->height)
 	{
-		if (map-> grid[i][0] != '1')
+		if (map->grid[i][0] != '1' || map->grid[i][map->width - 1] != '1')
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-static int	check_components(t_map *map)
+static int	components_to_check(t_map *map)
 {
-	int	i;
-	int	j;
+	int	p;
+	int	e;
+	int	y;
+	int	x;
 
-	i = 0;
-	while (i < map->height)
+	init_components (map, &p, &e, &y);
+	while (++y < map->height)
 	{
-		j = 0;
-		while (j < map->width)
+		x = -1;
+		while (++x < map->width)
 		{
-			if (map->grid[i][j] != 'P' || map->grid[i][j] != 'E'
-				|| map->grid[i][j] != 'C' || map->grid[i][j]!= 'W'
-					|| map->grid[i][j] != 'O')
-				return (ft_putstr_fd("ERROR: NEED ALL COMPONENTS", 2), 0);
-			j++;
+			if (map->grid[y][x] == 'P')
+			{
+				p++;
+				map->player_x = x;
+				map->player_y = y;
+			}
+			else if (map->grid[y][x] == 'E')
+				e++;
+			else if (map->grid[y][x] == 'C')
+				map->collectible_count++;
 		}
-		i++;
 	}
-	return (1);
+	return (p == 1 && e == 1 && map->collectible_count >= 1);
 }
 
 static int	path_valid_to_check(t_map *map)
@@ -102,13 +106,16 @@ static int	path_valid_to_check(t_map *map)
 
 int	validate_map(t_map *map)
 {
+	if (!map || map->height == 0 || map->width == 0)
+		return (0);
 	if (!check_rectangular_map(map))
-		return (ft_putstr_fd("ERROR: MAP IS NOT RECTANGULAR\n", 2), 0);
+		return (ft_putstr_fd("Error:\nMap is not rectangular!\n", 2), 0);
 	if (!wall_check(map))
-		return (ft_putstr_fd("ERROR: MAP IS NOT SURROUNDED BY WALLS\n", 2), 0);
-	if (!check_components(map))
-		return (ft_putstr_fd("ERROR: INVALID NUMBER OF ELEMENTS\n", 2), 0);
+		return (ft_putstr_fd("Error:\nMap is not surrounded by walls!\n", 2), 0);
+	if (!components_to_check(map))
+		return (ft_putstr_fd("Error:\nInvalid number of elements!\n", 2), 0);
 	if (!path_valid_to_check(map))
-		return (ft_putstr_fd("ERROR: INVALID PATH\n", 2), 0);
+		return (ft_putstr_fd("Error:\nInvalid path! Unreachable \
+			components.\n", 2), 0);
 	return (1);
 }
