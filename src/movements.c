@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:09:24 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/08 20:44:48 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/10 18:09:51 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,29 @@ int	handle_key(int key, void *param)
 	int		px;
 	int		py;
 	t_game	*game;
-	t_map	*map;
 
-	map = NULL;
 	game = (t_game *)param;
 	px = game->player_x;
 	py = game->player_y;
 	if (key == KEY_ESC)
 		mlx_loop_end(game->mlx);
 	else if (key == KEY_W)
-		py--;
+		process_movement(game, px, py - 1);
 	else if (key == KEY_A)
-		px--;
+		process_movement(game, px - 1, py);
 	else if (key == KEY_S)
-		py++;
+		process_movement(game, px, py + 1);
 	else if (key == KEY_D)
-		px++;
-	if (px < 0 || py < 0 || px >= get_map_dimensions(map, map->grid))
-		return (0);
-	if (game->map[py][px] != '1')
-		move_player(game, px, py);
+		process_movement(game, px + 1, py);
 	return (0);
+}
+
+void	process_movement(t_game *game, int px, int py)
+{
+	if (px < 0 || py < 0 || px >= get_map_width(game->map)
+		|| py >= get_map_height(game->map) || game->map[py][px] == '1')
+		return ;
+	if (game->map[py][px] == 'E' && game->collect > 0)
+		return ;
+	move_player(game, px, py);
 }

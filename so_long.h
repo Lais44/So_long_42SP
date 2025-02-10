@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:44:43 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/09 23:19:15 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/10 20:00:34 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <fcntl.h>
 # include "library/libft/libft.h"
 
-# define TILE_SIZE 64
+# define TILE_SIZE 32
 # define WINDOW_WIDTH 600
 # define WINDOW_HEIGHT 300
 
@@ -38,7 +38,6 @@ typedef struct s_game
 	int			moves_count;
 	void		*player_imgs;
 	void		*collect_imgs;
-	char		*imgs[5];
 	char		**map;
 	void		*wall;
 	void		*win;
@@ -46,6 +45,7 @@ typedef struct s_game
 	void		*player;
 	void		*ground;
 	void		*collect;
+	int			collects;
 	int			player_x;
 	int			player_y;
 }t_game;
@@ -70,7 +70,7 @@ typedef struct s_map
 
 char	**copy_the_original_map(char **original_map, int height);
 int		validate_extension(const char *filename);
-void	start_game(char *path_map_file, t_game *game);
+void	start_game(t_game *game, char *path_map_file);
 void	init_game(t_game *game);
 char	**copy_the_original_map(char **original_map, int height);
 void	flood_fill(char **map, int x, int y);
@@ -82,13 +82,20 @@ int		render_map(t_game *game);
 void	render_tile(t_game *game, char tile, int x, int y);
 int		main(int argc, char **argv);
 void	init_images(t_game *game);
-int		get_map_dimensions(t_map *map, char **map_data);
 int		handle_key(int key, void *param);
 void	exit_game(t_game *game);
 char	**read_maps(const char *map_type);
 void	load_image(t_game *game, void **img, char *path);
-int		validate_map(t_map *map);
-void	init_components(t_map *map, int *p, int *e, int *y);
+int		validate_map(char **map);
 int		count_chars(char **map, char c);
+int		get_map_height(char **map);
+int		get_map_width(char **map_data);
+void	process_movement(t_game *game, int px, int py);
+int		handle_exit(void *param);
+int		is_surrounded_by_walls(char **map);
+int		is_valid_path(t_game *game);
+char	**copy_map(char **map);
+void	free_map(char **map, int size);
+int		check_unreachable(t_game *game, char **map_copy);
 
 #endif

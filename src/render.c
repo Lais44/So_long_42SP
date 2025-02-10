@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:55:40 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/07 17:04:49 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/10 20:05:13 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	render_map(t_game *game)
 	int	x;
 
 	y = 0;
-	x = 0;
 	while (game->map[y])
 	{
+		x = 0;
 		while (game->map[y][x])
 		{
 			render_tile(game, game->map[y][x], x, y);

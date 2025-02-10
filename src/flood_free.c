@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 17:02:09 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/09 23:30:18 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/10 19:07:22 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,21 @@ char	**copy_the_original_map(char **original_map, int height)
 	return (copy_map);
 }
 
+void	free_map(char **map, int size)
+{
+	int	i;
+
+	if (!map)
+		return ;
+	i = 0;
+	while (i < size)
+	{
+		free(map[i]);
+		i++;
+	}
+	free(map);
+}
+
 void	free_map_copy(char **grid, int height)
 {
 	int	i;
@@ -65,4 +80,29 @@ void	free_map_copy(char **grid, int height)
 		i++;
 	}
 	free(grid);
+}
+
+int	check_unreachable(t_game *game, char **map_copy)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (map_copy[y])
+	{
+		x = 0;
+		while (map_copy[y][x])
+		{
+			if ((game->map[y][x] == 'C' || game->map[y][x] == 'E')
+				&& map_copy[y][x] != 'V')
+			{
+				free_map(map_copy, get_map_height(game->map));
+				return (0);
+			}
+			x++;
+		}
+		y++;
+	}
+	free_map(map_copy, get_map_height(game->map));
+	return (1);
 }

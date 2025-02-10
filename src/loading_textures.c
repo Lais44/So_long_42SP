@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 17:15:18 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/09 21:58:02 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/10 19:59:27 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,18 @@ void	loading_textures(t_game *game)
 {
 	int	size;
 
-	size = 64;
+	size = 32;
 	game->wall = mlx_xpm_file_to_image(game->mlx,
-			"image/wall.xpm", &size, &size);
+			"textures/wall.xpm", &size, &size);
 	game->ground = mlx_xpm_file_to_image(game->mlx,
 			"textures/ground.xpm", &size, &size);
 	game->player = mlx_xpm_file_to_image(game->mlx,
 			"textures/player.xpm", &size, &size);
 	game->portal = mlx_xpm_file_to_image(game->mlx,
-			"textures/exit.xpm", &size, &size);
+			"textures/portal.xpm", &size, &size);
 	game->collect = mlx_xpm_file_to_image(game->mlx,
-			"textures/collectible.xpm", &size, &size);
-	if (!game->wall || !game->ground || !game->player
-		|| !game->portal || !game->collect)
+			"textures/collect.xpm", &size, &size);
+	if (!game->wall || !game->ground || !game->player || !game->portal || !game->collect) 
 	{
 		write(2, "Error\nFailed to load textures\n", 31);
 		exit(1);
@@ -77,12 +76,4 @@ void	load_image(t_game *game, void **img, char *path)
 		write(2, "\n", 1);
 		exit(1);
 	}
-}
-
-void	init_components(t_map *map, int *p, int *e, int *y)
-{
-	*p = 0;
-	*e = 0;
-	*y = -1;
-	map->collectible_count = 0;
 }
