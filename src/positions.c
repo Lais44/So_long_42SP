@@ -6,30 +6,43 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:08:03 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/10 17:42:43 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/11 23:29:29 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-int	get_map_width(char **map_data)
+int	get_map_width(t_game *game)
 {
-	char	**map;
+	int	i;
 
-	map = map_data;
-	if (!map[0])
-		return (0);
-	return (ft_strlen(map[0]) - 1);
+	i = 0;
+	while (game->map[i] && game->map[i] != NULL)
+		i++;
+	return (i);
 }
 
-int	get_map_height(char **map)
+int	get_map_height(t_game *game)
 {
-	int	height;
+	int	i;
 
-	height = 0;
-	while (map[height])
-	height++;
-	return (height);
+	i = 0;
+	if (game->map != NULL && game->map[i] != NULL)
+	{
+		while (game->map[0][i])
+		{
+			i++;
+		}
+	}
+	return (i);
+}
+
+int	dimenssions_map(t_game *game)
+{
+	game->width = get_map_height(game);
+	game->height = get_map_width(game);
+	game->width -= 1;
+	return (0);
 }
 
 int	find_player_x(char **map)

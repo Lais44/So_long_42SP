@@ -6,27 +6,70 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 18:28:49 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/10 19:11:47 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/11 20:57:26 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-int	is_surrounded_by_walls(char **map)
+static int	retang_check_maps(t_game *game)
+{
+	int	i;
+
+	i = 1;
+	while (i < game -> height)
+	{
+		if ((int) ft_strlen(game->map[i]) != game->width)
+		{
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
+static int	border_check_maps(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	if (!retang_check_maps(game))
+		return (0);
+	while (i < game->width)
+	{
+		if (game->map[0][i] != '1' || game->map[game->height - 1][i] != '1')
+		{
+			return (0);
+		}
+		i++;
+	}
+	i = 0;
+	while (i < game->width)
+	{
+		if (game->map[i][0] != '1' || game->map[i][game->width - 1] != '1')
+		{
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
+static int	components_check_maps(t_game *game)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	j = 0;
-	while (map[i])
+	while (i < game->height)
 	{
-		while (map[i][j])
+		j = 0;
+		while (j < game->height)
 		{
-			if ((i == 0 || (map[i + 1] == NULL && map[i][j] != '1')))
-				return (0);
-			if ((j == 0 || (map[i][j + 1] == '\0' && map[i][j] != '1')))
-				return (0);
+			if (game->map[i][j] != 'P' && game->map[i][j] != 'E'
+				&& game->map[i][j] != 'C' && game->map[i][j]!= '1'
+					&& game->map[i][j] != 'O')
+				return (ft_putstr_fd("ERROR: NEED ALL COMPONENTS", 2), 0);
 			j++;
 		}
 		i++;
@@ -34,81 +77,20 @@ int	is_surrounded_by_walls(char **map)
 	return (1);
 }
 
-int	count_chars(char **map, char c)
+int	validate_map(t_game *game)
 {
-	int	count;
-	int	i;
-	int	j;
-
-	count = 0;
-	i = 0;
-	j = 0;
-	while (map[j])
+	game = malloc(sizeof(t_game) * 1);
+	if (!game)
+		return (free(game), 0);
+	if (!retang_check_maps(game))
+		return (ft_putstr_fd("[ERROR] MAPS NOT RETANGLE\n", 2), 0);
+	if (!border_check_maps(game))
+		return (ft_putstr_fd("[ERROR] INVALID BORDER MAPS\n", 2), 0);
+	if (!components_check_maps(game))
+		return (ft_putstr_fd("ERROR: NEED ALL COMPONENTS", 2), 0);
+	if (!flood_fill(game, game->map, game->player_x, game->player_y))
 	{
-		i = 0;
-		while (map[j][i])
-		{
-			if (map[j][i] == c)
-				count++;
-			i++;
-		}
-		j++;
-	}
-	return (count);
-}
-
-int	is_valid_path(t_game *game)
-{
-	char	**map_copy;
-
-	map_copy = copy_map(game->map);
-	if (!map_copy)
-		return (0);
-	flood_fill(map_copy, game->player_x, game->player_y);
-	return (check_unreachable(game, map_copy));
-}
-
-char	**copy_map(char **map)
-{
-	int		i;
-	char	**new_map;
-	int		height;
-
-	height = get_map_height(map);
-	new_map = malloc(sizeof(char *) * (height + 1));
-	if (!new_map)
-		return (NULL);
-	i = 0;
-	while (map[i])
-	{
-		new_map[i] = ft_strdup(map[i]);
-		if (!new_map[i])
-		{
-			free_map(new_map, i);
-			return (NULL);
-		}
-		i++;
-	}
-	new_map[i] = NULL;
-	return (new_map);
-}
-
-int	validate_map(char **map)
-{
-	t_game	game;
-
-	if (!is_surrounded_by_walls(map))
-		return (0);
-	if (count_chars(map, 'P') != 1)
-		return (0);
-	if (count_chars(map, 'E') != 1)
-		return (0);
-	if (count_chars(map, 'C') < 1)
-		return (0);
-	if (!is_valid_path(&game))
-	{
-		write(2, "Error: No valid path\n", 21);
-		return (0);
+		return (ft_putstr_fd("[ERROR] MAPS NOT VISITED\n", 2), 0);
 	}
 	return (1);
 }

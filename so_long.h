@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:44:43 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/10 20:00:34 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/12 00:26:40 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,15 @@
 # include "library/libft/libft.h"
 
 # define TILE_SIZE 32
+# define MAX_MAP_HEIGHT 100
 # define WINDOW_WIDTH 600
-# define WINDOW_HEIGHT 300
+# define WINDOW_HEIGHT 600
 
-# define MLX_ERROR 0
-
-# define WALL '1'
-# define FLOOR '0'
-# define PLAYER 'p'
-# define EXIT 'E'
-# define COLLECTIBLE 'C'
+# define KEY_ESC 65307
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
 
 typedef struct s_game
 {
@@ -39,15 +38,19 @@ typedef struct s_game
 	void		*player_imgs;
 	void		*collect_imgs;
 	char		**map;
-	void		*wall;
 	void		*win;
 	void		*portal;
 	void		*player;
 	void		*ground;
+	void		*wall;
 	void		*collect;
 	int			collects;
 	int			player_x;
 	int			player_y;
+	int			collectible_count;
+	void		*window;
+	int			height;
+	int			width;
 }t_game;
 
 typedef struct s_map
@@ -72,8 +75,7 @@ char	**copy_the_original_map(char **original_map, int height);
 int		validate_extension(const char *filename);
 void	start_game(t_game *game, char *path_map_file);
 void	init_game(t_game *game);
-char	**copy_the_original_map(char **original_map, int height);
-void	flood_fill(char **map, int x, int y);
+int		flood_fill(t_game *game, char **maps, int x, int y);
 void	free_map_copy(char **grid, int height);
 int		find_player_x(char **map);
 int		find_player_y(char **map);
@@ -82,20 +84,22 @@ int		render_map(t_game *game);
 void	render_tile(t_game *game, char tile, int x, int y);
 int		main(int argc, char **argv);
 void	init_images(t_game *game);
-int		handle_key(int key, void *param);
+int		handle(int keycode, t_game *game);
 void	exit_game(t_game *game);
 char	**read_maps(const char *map_type);
 void	load_image(t_game *game, void **img, char *path);
-int		validate_map(char **map);
-int		count_chars(char **map, char c);
-int		get_map_height(char **map);
-int		get_map_width(char **map_data);
 void	process_movement(t_game *game, int px, int py);
-int		handle_exit(void *param);
 int		is_surrounded_by_walls(char **map);
-int		is_valid_path(t_game *game);
-char	**copy_map(char **map);
+char	**copy_map(t_game *game);
+void	player_move(t_game *game, int x, int y);
+int		dimenssions_map(t_game *game);
+int		get_map_width(t_game *game);
+int		get_map_height(t_game *game);
+int		exit_game_2(void *game);
+int		free_maps(char **grid, int heigth);
 void	free_map(char **map, int size);
-int		check_unreachable(t_game *game, char **map_copy);
+int		validate_map(t_game *game);
+int		count_chars_game(char **map, char c);
+char	**read_map(const char *file);
 
 #endif

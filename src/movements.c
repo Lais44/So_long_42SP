@@ -6,53 +6,103 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:09:24 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/10 18:09:51 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/12 00:27:25 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-void	move_player(t_game *game, int px, int py)
+int	count_chars_game(char **map, char c)
 {
-	if (game->map[py][px] == 'C')
-		game->collect--;
-	game->map[game->player_y][game->player_x] = '0';
-	game->map[py][px] = 'P';
-	game->player_x = px;
-	game->player_y = py;
+	int	i;
+	int	j;
+	int	count;
+
+	count = 0;
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (map[i][j] == c)
+				count++;
+			j++;
+		}
+		i++;
+	}
+	return (count);
+}
+
+static void	update_player_position(t_game *game, int new_x, int new_y)
+{
+	game->player_x = new_x;
+	game->player_y = new_y;
+	game->moves_count++;
 	render_map(game);
-	if (game->collect == 0 && game->map[py][px] == 'E')
+}
+
+static void	update_game_state(t_game *game, int x, int y)
+{
+	int	new_x;
+	int	new_y;
+
+	new_x = game->player_x + x;
+	new_y = game->player_y + y;
+	if (game->map[new_y][new_x] != '1' && game->map[new_y][new_x] != 'E')
+	{
+		if (game->map[new_y][new_x] == 'C')
+			game->collectible_count++;
+		game->map[new_y][new_x] = 'P';
+		game->map[game->player_y][game->player_x] = '0';
+		update_player_position(game, new_x, new_y);
+	}
+	else if (game->map[new_y][new_x] == 'E')
+	{
+		if (game->collectible_count == game->collects)
+		{
+			update_player_position(game, new_x, new_y);
+			ft_putstr_fd("You win!\n", 1);
+			exit_game(game);
+		}
+		return ;
+	}
+}
+
+void	player_move(t_game *game, int x, int y)
+{
+	int	new_y;
+	int	new_x;
+	int	height;
+	int	width;
+
+	new_y = game->player_y + y;
+	new_x = game->player_x + x;
+	height = game->height;
+	width = game->width;
+	if (new_x >= 0 && new_y >= 0 && new_x < width && new_y < height)
+	{
+		if (game->map[new_y][new_x] != '1')
+		{
+			update_game_state(game, x, y);
+		}
+	}	
+	ft_putstr_fd("Steps nubers: ", 1);
+	ft_putnbr_fd(game->moves_count, 1);
+	ft_putstr_fd("\n", 1);
+}
+
+int	handle(int keycode, t_game *game)
+{
+	if (keycode == 65307)
 		exit_game(game);
-}
-
-int	handle_key(int key, void *param)
-{
-	int		px;
-	int		py;
-	t_game	*game;
-
-	game = (t_game *)param;
-	px = game->player_x;
-	py = game->player_y;
-	if (key == KEY_ESC)
-		mlx_loop_end(game->mlx);
-	else if (key == KEY_W)
-		process_movement(game, px, py - 1);
-	else if (key == KEY_A)
-		process_movement(game, px - 1, py);
-	else if (key == KEY_S)
-		process_movement(game, px, py + 1);
-	else if (key == KEY_D)
-		process_movement(game, px + 1, py);
+	else if (keycode == 119)
+		player_move(game, 0, -1);
+	else if (keycode == 115)
+		player_move(game, 0, 1);
+	else if (keycode == 97)
+		player_move(game, -1, 0);
+	else if (keycode == 100)
+		player_move(game, 1, 0);
 	return (0);
-}
-
-void	process_movement(t_game *game, int px, int py)
-{
-	if (px < 0 || py < 0 || px >= get_map_width(game->map)
-		|| py >= get_map_height(game->map) || game->map[py][px] == '1')
-		return ;
-	if (game->map[py][px] == 'E' && game->collect > 0)
-		return ;
-	move_player(game, px, py);
 }
