@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:09:24 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/12 00:27:25 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/12 21:18:55 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static void	update_game_state(t_game *game, int x, int y)
 
 	new_x = game->player_x + x;
 	new_y = game->player_y + y;
+	if (new_x < 0 || new_y < 0 || new_x >= game->width || new_y >= game->height)
+		return ;
 	if (game->map[new_y][new_x] != '1' && game->map[new_y][new_x] != 'E')
 	{
 		if (game->map[new_y][new_x] == 'C')

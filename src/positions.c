@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:08:03 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/11 23:29:29 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/13 01:04:16 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	find_player_x(char **map)
 	x = 0;
 	while (map[y])
 	{
+		x = 0;
 		while (map[y][x])
 		{
 			if (map[y][x] == 'P')
@@ -71,6 +72,7 @@ int	find_player_y(char **map)
 	int	x;
 
 	y = 0;
+	x = 0;
 	while (map[y])
 	{
 		x = 0;

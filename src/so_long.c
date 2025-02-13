@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 18:30:29 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/12 00:26:54 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/13 02:15:49 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,25 @@ void	start_game(t_game *game, char *path_map_file)
 	int		map_hw;
 
 	map_hw = 0;
+	game->map = read_map(path_map_file);
+	game->map_copy = read_map(path_map_file);
+	if (!game->map || !game->map_copy)
+	{
+		ft_putstr_fd("Error\nMap not loaded\n", 2);
+		exit(1);
+	}
+	map_hw = dimenssions_map(game);
+	game->player_x = find_player_x(game->map);
+	game->player_y = find_player_y(game->map);
+	if (!validate_map(game))
+		exit(1);
 	game->mlx = mlx_init();
 	if (!game->mlx)
 	{
 		ft_putstr_fd("Error\nmlx not initialized\n", 2);
 		exit(1);
 	}
-	game->map = read_map(path_map_file);
-	map_hw = dimenssions_map(game);
-	if (!game->map)
-	{
-		ft_putstr_fd("Error\nMap not loaded\n", 2);
-		exit(1);
-	}
-	game->player_x = 1;
-	game->player_y = 16;
 	game->collects = count_chars_game(game->map, 'C');
-	map_hw = dimenssions_map(game);
 	game->window = mlx_new_window(game->mlx, game->width * TILE_SIZE,
 			game->height * TILE_SIZE, "window");
 	loading_textures(game);

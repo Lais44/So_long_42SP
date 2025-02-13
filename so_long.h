@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:44:43 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/12 00:26:40 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/13 02:16:14 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_game
 	void		*player_imgs;
 	void		*collect_imgs;
 	char		**map;
+	char		**map_copy;
 	void		*win;
 	void		*portal;
 	void		*player;
@@ -71,6 +72,8 @@ typedef struct s_map
 # define KEY_S   115     // Código para a tecla S
 # define KEY_D   100     // Código para a tecla D
 
+int		check_for_exit(t_game *game);
+void	copy_map(t_game *game);
 char	**copy_the_original_map(char **original_map, int height);
 int		validate_extension(const char *filename);
 void	start_game(t_game *game, char *path_map_file);
@@ -90,7 +93,6 @@ char	**read_maps(const char *map_type);
 void	load_image(t_game *game, void **img, char *path);
 void	process_movement(t_game *game, int px, int py);
 int		is_surrounded_by_walls(char **map);
-char	**copy_map(t_game *game);
 void	player_move(t_game *game, int x, int y);
 int		dimenssions_map(t_game *game);
 int		get_map_width(t_game *game);
