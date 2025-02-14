@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:09:24 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/13 17:27:14 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/13 21:47:11 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	count_chars_game(char **map, char c)
 	return (count);
 }
 
-static void	update_player_position(t_game *game, int new_x, int new_y)
+void	update_player_position(t_game *game, int new_x, int new_y)
 {
 	game->player_x = new_x;
 	game->player_y = new_y;
@@ -42,7 +42,7 @@ static void	update_player_position(t_game *game, int new_x, int new_y)
 	render_map(game);
 }
 
-static void	update_game_state(t_game *game, int x, int y)
+void	update_game_state(t_game *game, int x, int y)
 {
 	int	new_x;
 	int	new_y;

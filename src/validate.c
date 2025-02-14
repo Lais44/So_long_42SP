@@ -6,13 +6,13 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 18:28:49 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/13 19:59:27 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/13 21:46:00 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-static int	retang_check_maps(t_game *game)
+int	retang_check_maps(t_game *game)
 {
 	int	i;
 	int	line_size;
@@ -33,7 +33,7 @@ static int	retang_check_maps(t_game *game)
 	return (1);
 }
 
-static int	border_check_maps(t_game *game)
+int	border_check_maps(t_game *game)
 {
 	int	i;
 
@@ -58,7 +58,7 @@ static int	border_check_maps(t_game *game)
 	return (1);
 }
 
-static	int	is_valid_char(char c)
+int	is_valid_char(char c)
 {
 	static int	is_p = 0;
 	static int	is_c = 0;
@@ -81,7 +81,7 @@ static	int	is_valid_char(char c)
 	return ((is_c + is_e + is_p));
 }
 
-static int	components_check_maps(t_game *game)
+int	components_check_maps(t_game *game)
 {
 	char		components[5];
 	int			i;

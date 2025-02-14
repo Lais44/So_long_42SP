@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:44:43 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/13 17:13:41 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/13 21:47:21 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,8 @@ typedef struct s_map
 # define KEY_D   100     // Código para a tecla D
 
 int		check_for_exit(t_game *game);
-void	copy_map(t_game *game);
-char	**copy_the_original_map(char **original_map, int height);
-int		validate_extension(const char *filename);
 void	start_game(t_game *game, char *path_map_file);
-void	init_game(t_game *game);
 int		flood_fill(t_game *game, char **maps, int x, int y);
-void	free_map_copy(char **grid, int height);
 int		find_player_x(char **map);
 int		find_player_y(char **map);
 void	loading_textures(t_game *game);
@@ -89,19 +84,21 @@ int		main(int argc, char **argv);
 void	init_images(t_game *game);
 int		handle(int keycode, t_game *game);
 void	exit_game(t_game *game);
-char	**read_maps(const char *map_type);
 void	load_image(t_game *game, void **img, char *path);
-void	process_movement(t_game *game, int px, int py);
-int		is_surrounded_by_walls(char **map);
 void	player_move(t_game *game, int x, int y);
 int		dimenssions_map(t_game *game);
 int		get_map_width(t_game *game);
 int		get_map_height(t_game *game);
 int		exit_game_2(t_game *game);
 int		free_maps(char **grid, int heigth);
-void	free_map(char **map, int size);
 int		validate_map(t_game *game);
 int		count_chars_game(char **map, char c);
 char	**read_map(const char *file);
+int		components_check_maps(t_game *game);
+int		is_valid_char(char c);
+int		border_check_maps(t_game *game);
+int		retang_check_maps(t_game *game);
+void	update_player_position(t_game *game, int new_x, int new_y);
+void	update_game_state(t_game *game, int x, int y);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 17:15:18 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/11 20:17:04 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/13 21:47:51 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	loading_textures(t_game *game)
 			"textures/portal.xpm", &size, &size);
 	game->collect = mlx_xpm_file_to_image(game->mlx,
 			"textures/collect.xpm", &size, &size);
-	if (!game->wall || !game->ground || !game->player || !game->portal || !game->collect) 
+	if (!game->wall || !game->ground || !game->player
+		|| !game->portal || !game->collect)
 	{
 		write(2, "Error\nFailed to load textures\n", 31);
 		exit(1);
