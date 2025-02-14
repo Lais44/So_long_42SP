@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:44:43 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/13 02:16:14 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:13:41 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	player_move(t_game *game, int x, int y);
 int		dimenssions_map(t_game *game);
 int		get_map_width(t_game *game);
 int		get_map_height(t_game *game);
-int		exit_game_2(void *game);
+int		exit_game_2(t_game *game);
 int		free_maps(char **grid, int heigth);
 void	free_map(char **map, int size);
 int		validate_map(t_game *game);

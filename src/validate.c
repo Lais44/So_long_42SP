@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 18:28:49 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/13 02:16:09 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/13 19:59:27 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	retang_check_maps(t_game *game)
 	int	i;
 	int	line_size;
 
-	i = 1;
+	i = 0;
 	line_size = 0;
 	while (game->map[i])
 	{

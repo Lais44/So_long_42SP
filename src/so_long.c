@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 18:30:29 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/13 02:15:49 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:17:37 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,9 @@ void	start_game(t_game *game, char *path_map_file)
 	loading_textures(game);
 }
 
-int	exit_game_2(void *game)
+int	exit_game_2(t_game *game)
 {
-	t_game	*game_ptr;
-
-	game_ptr = (t_game *)game;
-	exit_game(game_ptr);
+	exit_game(game);
 	exit(0);
 }
 
@@ -66,7 +63,7 @@ int	main(int argc, char **argv)
 	init_images(game);
 	render_map(game);
 	mlx_key_hook(game->window, handle, game);
-	mlx_hook(game->window, 2, 1L << 17, exit_game_2, game);
+	mlx_hook(game->window, 17, 0, exit_game_2, game);
 	mlx_loop(game->mlx);
 	free_maps(game->map, game->height);
 	exit_game_2(game);
