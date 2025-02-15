@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 17:02:09 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/13 21:06:20 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/15 19:51:23 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,11 @@ void	exit_game(t_game *game)
 	i = 0;
 	while (game->map[i])
 		free(game->map[i++]);
+	i = 0;
+	while (game->map_copy[i])
+		free(game->map_copy[i++]);
 	free(game->map);
+	free(game->map_copy);
 	mlx_destroy_image(game->mlx, game->wall);
 	mlx_destroy_image(game->mlx, game->ground);
 	mlx_destroy_image(game->mlx, game->player);

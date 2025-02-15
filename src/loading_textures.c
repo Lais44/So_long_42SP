@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 17:15:18 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/13 21:47:51 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/15 18:45:52 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,14 @@ void	load_image(t_game *game, void **img, char *path)
 		write(2, "\n", 1);
 		exit(1);
 	}
+}
+
+int	validate_extension(const char *filename)
+{
+	size_t	len;
+
+	len = ft_strlen(filename);
+	if (len < 4)
+		return (0);
+	return (!ft_strncmp(filename + len - 4, ".ber", 4));
 }

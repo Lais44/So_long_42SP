@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 18:30:29 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/13 17:17:37 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/15 19:50:40 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	start_game(t_game *game, char *path_map_file)
 	map_hw = 0;
 	game->map = read_map(path_map_file);
 	game->map_copy = read_map(path_map_file);
+	game->moves_count = 0;
 	if (!game->map || !game->map_copy)
 	{
 		ft_putstr_fd("Error\nMap not loaded\n", 2);
@@ -35,6 +36,7 @@ void	start_game(t_game *game, char *path_map_file)
 		ft_putstr_fd("Error\nmlx not initialized\n", 2);
 		exit(1);
 	}
+	game->collectible_count = 0;
 	game->collects = count_chars_game(game->map, 'C');
 	game->window = mlx_new_window(game->mlx, game->width * TILE_SIZE,
 			game->height * TILE_SIZE, "window");
@@ -59,6 +61,8 @@ int	main(int argc, char **argv)
 		ft_putstr_fd("Error\nInvalid number of arguments\n", 33);
 		return (1);
 	}
+	if (!validate_extension(argv[1]))
+		return (ft_putstr_fd("[ERR0R] map must have .ber extension!\n", 2), 1);
 	start_game(game, argv[1]);
 	init_images(game);
 	render_map(game);

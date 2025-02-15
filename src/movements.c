@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:09:24 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/13 21:47:11 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/15 17:20:05 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	player_move(t_game *game, int x, int y)
 		if (game->map[new_y][new_x] != '1')
 		{
 			update_game_state(game, x, y);
-			ft_putstr_fd("Steps nubers: ", 1);
+			ft_putstr_fd("Steps numbers: ", 1);
 			ft_putnbr_fd(game->moves_count, 1);
 			ft_putstr_fd("\n", 1);
 		}

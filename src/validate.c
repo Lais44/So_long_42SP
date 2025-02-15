@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 18:28:49 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/13 21:46:00 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/15 19:55:02 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,12 @@ int	components_check_maps(t_game *game)
 int	validate_map(t_game *game)
 {
 	if (!retang_check_maps(game))
-		return (ft_putstr_fd("[ERROR] MAPS NOT RETANGLE\n", 2), 0);
+		return (ft_putstr_fd("[ERROR] MAPS NOT RETANGLE\n", 2), exit_game(game), free(game), 0);
 	if (!border_check_maps(game))
-		return (ft_putstr_fd("[ERROR] INVALID BORDER MAPS\n", 2), 0);
+		return (ft_putstr_fd("[ERROR] INVALID BORDER MAPS\n", 2), exit_game(game), free(game), 0);
 	if (!components_check_maps(game))
-		return (0);
+		return (exit_game(game), free(game), 0);
 	if (!check_for_exit(game))
-		return (ft_putstr_fd("[ERROR] MAPS NOT VISITED\n", 2), 0);
+		return (ft_putstr_fd("[ERROR] MAPS NOT VISITED\n", 2), exit_game(game), free(game), 0);
 	return (1);
 }

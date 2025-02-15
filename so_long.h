@@ -6,7 +6,7 @@
 /*   By: lleal-go <lleal-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:44:43 by lleal-go          #+#    #+#             */
-/*   Updated: 2025/02/13 21:47:21 by lleal-go         ###   ########.fr       */
+/*   Updated: 2025/02/15 19:51:50 by lleal-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 
 # define TILE_SIZE 32
 # define MAX_MAP_HEIGHT 100
-# define WINDOW_WIDTH 600
-# define WINDOW_HEIGHT 600
+# define WINDOW_WIDTH 900
+# define WINDOW_HEIGHT 900
 
 # define KEY_ESC 65307
 # define KEY_W 119
@@ -40,10 +40,10 @@ typedef struct s_game
 	char		**map;
 	char		**map_copy;
 	void		*win;
+	void		*wall;
 	void		*portal;
 	void		*player;
 	void		*ground;
-	void		*wall;
 	void		*collect;
 	int			collects;
 	int			player_x;
@@ -52,6 +52,7 @@ typedef struct s_game
 	void		*window;
 	int			height;
 	int			width;
+	char		*map_path;
 }t_game;
 
 typedef struct s_map
@@ -65,12 +66,11 @@ typedef struct s_map
 	int		player_y;
 }t_map;
 
-// Macros para códigos de tecla
-# define KEY_ESC 65307   // Código para a tecla ESC
-# define KEY_W   119     // Código para a tecla W
-# define KEY_A   97      // Código para a tecla A
-# define KEY_S   115     // Código para a tecla S
-# define KEY_D   100     // Código para a tecla D
+# define KEY_ESC	65307
+# define KEY_W		119
+# define KEY_A		97
+# define KEY_S		115
+# define KEY_D		100
 
 int		check_for_exit(t_game *game);
 void	start_game(t_game *game, char *path_map_file);
@@ -100,5 +100,6 @@ int		border_check_maps(t_game *game);
 int		retang_check_maps(t_game *game);
 void	update_player_position(t_game *game, int new_x, int new_y);
 void	update_game_state(t_game *game, int x, int y);
+int		validate_extension(const char *filename);
 
 #endif
